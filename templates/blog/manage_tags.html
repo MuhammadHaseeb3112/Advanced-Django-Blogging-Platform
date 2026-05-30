@@ -1,0 +1,698 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    {% include 'includes/dashboard_sidebar.html' %}
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-main">
+
+        <!-- SUCCESS MESSAGE -->
+
+        {% if messages %}
+
+        {% for message in messages %}
+
+        <div class="success-alert">
+
+            {{ message }}
+
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+
+        <!-- TOP SECTION -->
+
+        <div class="section-box">
+
+            <div class="section-top">
+
+                <div>
+
+                    <span class="section-badge">
+
+                        🏷️ Content Management
+
+                    </span>
+
+                    <h1>
+
+                        Tags Management
+
+                    </h1>
+
+                    <p>
+
+                        Create, organize and manage blog tags professionally.
+
+                    </p>
+
+                </div>
+
+                <div class="stats-badge">
+
+                    {{ tags.count }} Tags
+
+                </div>
+
+            </div>
+
+            <!-- SEARCH -->
+
+            <form method="GET" class="search-form">
+
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Search tags...">
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+            <!-- ADD TAG -->
+
+            {% if not edit_tag %}
+
+            <form method="POST" class="admin-form">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <input type="text" name="name" placeholder="Enter tag name..." required>
+
+                    <button type="submit">
+
+                        Add Tag
+
+                    </button>
+
+                </div>
+
+            </form>
+
+            {% endif %}
+
+        </div>
+
+        <!-- EDIT TAG -->
+
+        {% if edit_tag %}
+
+        <div class="edit-card">
+
+            <div class="edit-top">
+
+                <h2>
+
+                    ✏️ Edit Tag
+
+                </h2>
+
+                <p>
+
+                    Update tag details professionally.
+
+                </p>
+
+            </div>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="tag_id" value="{{ edit_tag.id }}">
+
+                <div class="form-group">
+
+                    <input type="text" name="name" value="{{ edit_tag.name }}" required>
+
+                    <button type="submit">
+
+                        Update Tag
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        {% endif %}
+
+        <!-- TAGS GRID -->
+
+        <div class="tags-grid">
+
+            {% for tag in tags %}
+
+            <div class="tag-card">
+
+                <!-- TOP -->
+
+                <div class="tag-top">
+
+                    <div class="tag-icon">
+
+                        #
+
+                    </div>
+
+                    <div class="tag-info">
+
+                        <h3>
+
+                            {{ tag.name }}
+
+                        </h3>
+
+                        <p>
+
+                            Blog tag category
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- META -->
+
+                <div class="tag-meta">
+
+                    <div class="meta-box">
+
+                        <span>
+
+                            Slug
+
+                        </span>
+
+                        <strong>
+
+                            {{ tag.slug }}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <!-- ACTIONS -->
+
+                <div class="tag-actions">
+
+                    <!-- EDIT -->
+
+                    <a href="?edit={{ tag.id }}" class="edit-btn">
+
+                        Edit
+
+                    </a>
+
+                    <!-- DELETE -->
+
+                    <form method="POST" class="delete-form">
+
+                        {% csrf_token %}
+
+                        <input type="hidden" name="delete_tag_id" value="{{ tag.id }}">
+
+                        <button type="submit" class="delete-btn">
+
+                            Delete
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <!-- EMPTY -->
+
+            <div class="empty-box">
+
+                <div class="empty-icon">
+
+                    🏷️
+
+                </div>
+
+                <h2>
+
+                    No Tags Found
+
+                </h2>
+
+                <p>
+
+                    Create your first blog tag.
+
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</div>
+
+<style>
+    .success-alert {
+
+        background: #dcfce7;
+
+        color: #166534;
+
+        padding: 18px 22px;
+
+        border-radius: 16px;
+
+        margin-bottom: 30px;
+
+        font-weight: 600;
+
+    }
+
+    .section-box {
+
+        background: white;
+
+        padding: 35px;
+
+        border-radius: 30px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.05);
+
+        margin-bottom: 35px;
+
+    }
+
+    .section-top {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 20px;
+
+        margin-bottom: 35px;
+
+    }
+
+    .section-badge {
+
+        background: #dbeafe;
+
+        color: #2563eb;
+
+        padding: 10px 18px;
+
+        border-radius: 50px;
+
+        font-weight: 600;
+
+    }
+
+    .section-top h1 {
+
+        font-size: 52px;
+
+        margin-top: 18px;
+
+        margin-bottom: 14px;
+
+    }
+
+    .section-top p {
+
+        color: #6b7280;
+
+    }
+
+    .stats-badge {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        padding: 16px 22px;
+
+        border-radius: 16px;
+
+        font-weight: 600;
+
+    }
+
+    .search-form {
+
+        display: flex;
+
+        gap: 18px;
+
+        margin-bottom: 25px;
+
+        flex-wrap: wrap;
+
+    }
+
+    .search-form input {
+
+        flex: 1;
+
+        padding: 18px 20px;
+
+        border-radius: 16px;
+
+        border: 1px solid #e5e7eb;
+
+        background: #f9fafb;
+
+    }
+
+    .search-form button {
+
+        background: #111827;
+
+        color: white;
+
+        border: none;
+
+        padding: 18px 28px;
+
+        border-radius: 16px;
+
+        cursor: pointer;
+
+    }
+
+    .admin-form {
+
+        width: 100%;
+
+    }
+
+    .edit-card {
+
+        background: white;
+
+        padding: 35px;
+
+        border-radius: 30px;
+
+        margin-bottom: 35px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.05);
+
+    }
+
+    .edit-top {
+
+        margin-bottom: 24px;
+
+    }
+
+    .edit-top h2 {
+
+        font-size: 36px;
+
+        margin-bottom: 10px;
+
+    }
+
+    .edit-top p {
+
+        color: #6b7280;
+
+    }
+
+    .form-group {
+
+        display: flex;
+
+        gap: 18px;
+
+        flex-wrap: wrap;
+
+    }
+
+    .form-group input {
+
+        flex: 1;
+
+        min-width: 250px;
+
+        padding: 18px 20px;
+
+        border-radius: 16px;
+
+        border: 1px solid #e5e7eb;
+
+        background: #f9fafb;
+
+    }
+
+    .form-group button {
+
+        background: #2563eb;
+
+        color: white;
+
+        border: none;
+
+        padding: 18px 28px;
+
+        border-radius: 16px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+    }
+
+    .tags-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(320px, 1fr));
+
+        gap: 30px;
+
+    }
+
+    .tag-card {
+
+        background: white;
+
+        border-radius: 28px;
+
+        padding: 30px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.05);
+
+    }
+
+    .tag-top {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 18px;
+
+        margin-bottom: 28px;
+
+    }
+
+    .tag-icon {
+
+        width: 65px;
+
+        height: 65px;
+
+        border-radius: 18px;
+
+        background: #dbeafe;
+
+        color: #2563eb;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 28px;
+
+        font-weight: bold;
+
+    }
+
+    .tag-info h3 {
+
+        font-size: 28px;
+
+        margin-bottom: 8px;
+
+    }
+
+    .tag-info p {
+
+        color: #6b7280;
+
+    }
+
+    .tag-meta {
+
+        margin-bottom: 28px;
+
+    }
+
+    .meta-box {
+
+        background: #f9fafb;
+
+        padding: 18px;
+
+        border-radius: 16px;
+
+    }
+
+    .meta-box span {
+
+        display: block;
+
+        color: #6b7280;
+
+        margin-bottom: 8px;
+
+    }
+
+    .tag-actions {
+
+        display: flex;
+
+        gap: 14px;
+
+    }
+
+    .edit-btn,
+    .delete-btn {
+
+        flex: 1;
+
+        text-align: center;
+
+        padding: 14px;
+
+        border-radius: 14px;
+
+        font-weight: 600;
+
+        border: none;
+
+        cursor: pointer;
+
+    }
+
+    .edit-btn {
+
+        background: #dcfce7;
+
+        color: #166534;
+
+    }
+
+    .delete-btn {
+
+        background: #fee2e2;
+
+        color: #dc2626;
+
+    }
+
+    .delete-form {
+
+        flex: 1;
+
+    }
+
+    .delete-form button {
+
+        width: 100%;
+
+    }
+
+    .empty-box {
+
+        grid-column: 1/-1;
+
+        background: white;
+
+        padding: 80px 30px;
+
+        border-radius: 30px;
+
+        text-align: center;
+
+    }
+
+    .empty-icon {
+
+        font-size: 80px;
+
+        margin-bottom: 24px;
+
+    }
+
+    .empty-box h2 {
+
+        font-size: 42px;
+
+        margin-bottom: 14px;
+
+    }
+
+    .empty-box p {
+
+        color: #6b7280;
+
+    }
+
+    @media(max-width: 768px) {
+
+        .section-top h1 {
+
+            font-size: 38px;
+
+        }
+
+    }
+</style>
+
+{% endblock %}

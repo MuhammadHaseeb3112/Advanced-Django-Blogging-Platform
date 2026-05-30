@@ -1,0 +1,515 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'includes/dashboard_sidebar.html' %}
+
+    <main class="dashboard-main">
+
+        <!-- ===================================== -->
+        <!-- PAGE TOP -->
+        <!-- ===================================== -->
+
+        <div class="page-top">
+
+            <span class="page-badge">
+
+                👥 Admin Panel
+
+            </span>
+
+            <h1>
+
+                Manage Users
+
+            </h1>
+
+            <p>
+
+                Platform users and account management.
+
+            </p>
+
+        </div>
+
+        <!-- ===================================== -->
+        <!-- USERS TABLE -->
+        <!-- ===================================== -->
+
+        <div class="users-table-wrapper">
+
+            <table class="users-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            User
+
+                        </th>
+
+                        <th>
+
+                            Email
+
+                        </th>
+
+                        <th>
+
+                            Role
+
+                        </th>
+
+                        <th>
+
+                            Joined
+
+                        </th>
+
+                        <th>
+
+                            Posts
+
+                        </th>
+
+                        <th>
+
+                            Status
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for user in users %}
+
+                    <tr>
+
+                        <!-- USER -->
+
+                        <td>
+
+                            <div class="user-info">
+
+                                {% if user.profile_image %}
+
+                                <img src="{{ user.profile_image.url }}">
+
+                                {% else %}
+
+                                <div class="user-avatar">
+
+                                    {{ user.username|first|upper }}
+
+                                </div>
+
+                                {% endif %}
+
+                                <div>
+
+                                    <h4>
+
+                                        {{ user.username }}
+
+                                    </h4>
+
+                                    <span>
+
+                                        ID:
+                                        {{ user.id }}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- EMAIL -->
+
+                        <td>
+
+                            {{ user.email }}
+
+                        </td>
+
+                        <!-- ROLE -->
+
+                        <td>
+
+                            <span class="role-badge role-{{ user.role }}">
+
+                                {{ user.role }}
+
+                            </span>
+
+                        </td>
+
+                        <!-- JOINED -->
+
+                        <td>
+
+                            {{ user.date_joined|date:"M d, Y" }}
+
+                        </td>
+
+                        <!-- POSTS -->
+
+                        <td>
+
+                            {{ user.posts.count }}
+
+                        </td>
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            {% if user.is_active %}
+
+                            <span class="status-active">
+
+                                Active
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="status-inactive">
+
+                                Inactive
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="empty-box">
+
+                                <h2>
+
+                                    No users found
+
+                                </h2>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+<style>
+
+/* ===================================== */
+/* PAGE TOP */
+/* ===================================== */
+
+.page-top {
+
+    margin-bottom: 45px;
+
+}
+
+.page-badge {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    padding: 10px 18px;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+}
+
+.page-top h1 {
+
+    font-size: 56px;
+
+    margin-top: 22px;
+
+    margin-bottom: 14px;
+
+}
+
+.page-top p {
+
+    color: #6b7280;
+
+    font-size: 17px;
+
+}
+
+/* ===================================== */
+/* TABLE WRAPPER */
+/* ===================================== */
+
+.users-table-wrapper {
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 30px;
+
+    overflow-x: auto;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.05);
+
+}
+
+/* ===================================== */
+/* TABLE */
+/* ===================================== */
+
+.users-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 950px;
+
+}
+
+.users-table thead tr {
+
+    background: #f9fafb;
+
+}
+
+.users-table th {
+
+    text-align: left;
+
+    padding: 20px;
+
+    font-size: 15px;
+
+    color: #6b7280;
+
+    font-weight: 700;
+
+}
+
+.users-table td {
+
+    padding: 22px 20px;
+
+    border-bottom: 1px solid #f3f4f6;
+
+    vertical-align: middle;
+
+}
+
+/* ===================================== */
+/* USER INFO */
+/* ===================================== */
+
+.user-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+.user-info img {
+
+    width: 52px;
+
+    height: 52px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+}
+
+.user-avatar {
+
+    width: 52px;
+
+    height: 52px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: 700;
+
+    font-size: 20px;
+
+}
+
+.user-info h4 {
+
+    margin-bottom: 4px;
+
+    color: #111827;
+
+}
+
+.user-info span {
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+}
+
+/* ===================================== */
+/* ROLE BADGES */
+/* ===================================== */
+
+.role-badge {
+
+    padding: 10px 16px;
+
+    border-radius: 50px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-transform: capitalize;
+
+}
+
+.role-admin {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+
+}
+
+.role-author {
+
+    background: #dbeafe;
+
+    color: #2563eb;
+
+}
+
+.role-user {
+
+    background: #dcfce7;
+
+    color: #16a34a;
+
+}
+
+/* ===================================== */
+/* STATUS */
+/* ===================================== */
+
+.status-active {
+
+    background: #dcfce7;
+
+    color: #16a34a;
+
+    padding: 10px 16px;
+
+    border-radius: 50px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+.status-inactive {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+
+    padding: 10px 16px;
+
+    border-radius: 50px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+/* ===================================== */
+/* EMPTY */
+/* ===================================== */
+
+.empty-box {
+
+    text-align: center;
+
+    padding: 80px 20px;
+
+}
+
+.empty-box h2 {
+
+    font-size: 34px;
+
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media(max-width:768px) {
+
+    .page-top h1 {
+
+        font-size: 42px;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

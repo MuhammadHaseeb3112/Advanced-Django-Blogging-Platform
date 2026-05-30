@@ -1,0 +1,537 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    {% include 'includes/dashboard_sidebar.html' %}
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-main">
+
+        <div class="profile-layout">
+
+            <!-- PROFILE CARD -->
+
+            <div class="profile-card">
+
+                <div class="profile-cover"></div>
+
+                <div class="profile-avatar-wrapper">
+
+                    {% if request.user.profile_image %}
+
+                    <img
+                        src="{{ request.user.profile_image.url }}"
+                        class="profile-avatar"
+                    >
+
+                    {% else %}
+
+                    <div class="profile-avatar">
+
+                        {{ request.user.username|first|upper }}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="profile-info">
+
+                    <h1>
+
+                        {{ request.user.username }}
+
+                    </h1>
+
+                    <p>
+
+                        {{ request.user.email }}
+
+                    </p>
+
+                    <span class="role-badge">
+
+                        {% if request.user.is_superuser %}
+
+                            Administrator
+
+                        {% elif request.user.is_staff %}
+
+                            Author
+
+                        {% else %}
+
+                            Reader
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+                <!-- STATS -->
+
+                <div class="profile-stats">
+
+                    <div class="stat-box">
+
+                        <h2>
+
+                            {{ user_posts.count }}
+
+                        </h2>
+
+                        <span>
+
+                            Posts
+
+                        </span>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <h2>
+
+                            {{ request.user.comments.count }}
+
+                        </h2>
+
+                        <span>
+
+                            Comments
+
+                        </span>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <h2>
+
+                            {{ request.user.bookmarked_posts.count }}
+
+                        </h2>
+
+                        <span>
+
+                            Saved
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- EDIT PROFILE -->
+
+            <div class="edit-profile-card">
+
+                <div class="section-top">
+
+                    <h2>
+
+                        ✏️ Edit Profile
+
+                    </h2>
+
+                    <p>
+
+                        Update your account information.
+
+                    </p>
+
+                </div>
+
+                <!-- SUCCESS MESSAGE -->
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                    <div class="success-message">
+
+                        {{ message }}
+
+                    </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+                <!-- FORM -->
+
+                <form method="POST"
+                      enctype="multipart/form-data"
+                      class="profile-form">
+
+                    {% csrf_token %}
+
+                    <!-- USERNAME -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Username
+
+                        </label>
+
+                        <input type="text"
+                               name="username"
+                               value="{{ request.user.username }}">
+
+                    </div>
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Email Address
+
+                        </label>
+
+                        <input type="email"
+                               name="email"
+                               value="{{ request.user.email }}">
+
+                    </div>
+
+                    <!-- IMAGE -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Profile Image
+
+                        </label>
+
+                        <input type="file"
+                               name="profile_image">
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <button class="save-btn">
+
+                        Save Changes
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<style>
+
+.profile-layout {
+
+    display: grid;
+
+    grid-template-columns: 420px 1fr;
+
+    gap: 35px;
+
+}
+
+.profile-card {
+
+    background: white;
+
+    border-radius: 30px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.05);
+
+}
+
+.profile-cover {
+
+    height: 180px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+
+}
+
+.profile-avatar-wrapper {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: -70px;
+
+}
+
+.profile-avatar {
+
+    width: 140px;
+
+    height: 140px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 52px;
+
+    font-weight: bold;
+
+    border: 6px solid white;
+
+    object-fit: cover;
+
+}
+
+.profile-info {
+
+    text-align: center;
+
+    padding: 20px;
+
+}
+
+.profile-info h1 {
+
+    font-size: 42px;
+
+    margin-bottom: 12px;
+
+}
+
+.profile-info p {
+
+    color: #6b7280;
+
+    margin-bottom: 18px;
+
+}
+
+.role-badge {
+
+    background: #dbeafe;
+
+    color: #2563eb;
+
+    padding: 10px 18px;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+}
+
+.profile-stats {
+
+    padding: 35px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+.stat-box {
+
+    background: #f9fafb;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+
+}
+
+.stat-box h2 {
+
+    font-size: 34px;
+
+    margin-bottom: 10px;
+
+}
+
+.stat-box span {
+
+    color: #6b7280;
+
+}
+
+.edit-profile-card {
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.05);
+
+}
+
+.section-top {
+
+    margin-bottom: 35px;
+
+}
+
+.section-top h2 {
+
+    font-size: 40px;
+
+    margin-bottom: 12px;
+
+}
+
+.section-top p {
+
+    color: #6b7280;
+
+}
+
+.success-message {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    padding: 16px 20px;
+
+    border-radius: 14px;
+
+    margin-bottom: 25px;
+
+    font-weight: 600;
+
+}
+
+.profile-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 25px;
+
+}
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+.form-group label {
+
+    font-weight: 600;
+
+}
+
+.form-group input {
+
+    width: 100%;
+
+    padding: 16px 20px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e5e7eb;
+
+    background: #f9fafb;
+
+    font-size: 16px;
+
+}
+
+.save-btn {
+
+    background: #2563eb;
+
+    color: white;
+
+    border: none;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+.save-btn:hover {
+
+    background: #1d4ed8;
+
+}
+
+@media(max-width: 1100px) {
+
+    .profile-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+@media(max-width: 700px) {
+
+    .profile-stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

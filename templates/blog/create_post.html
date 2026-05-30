@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'includes/dashboard_sidebar.html' %}
+
+    <main class="dashboard-main">
+
+        <div class="form-wrapper">
+
+            <div class="form-card">
+
+                <div class="form-top">
+
+                    <span class="form-badge">
+
+                        ✍️ Create New Blog
+
+                    </span>
+
+                    <h1>
+
+                        Publish Your Article
+
+                    </h1>
+
+                    <p>
+
+                        Share your ideas, tutorials and knowledge
+                        with the community.
+
+                    </p>
+
+                </div>
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <!-- TITLE -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Blog Title
+
+                        </label>
+
+                        <input type="text" name="title" placeholder="Enter blog title" required>
+
+                    </div>
+
+                    <!-- SHORT DESCRIPTION -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Short Description
+
+                        </label>
+
+                        <textarea name="short_description" rows="3" placeholder="Write short description"></textarea>
+
+                    </div>
+
+                    <!-- CONTENT -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Blog Content
+
+                        </label>
+
+                        <textarea name="content" rows="10" placeholder="Write your blog..." required></textarea>
+
+                    </div>
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Status
+
+                        </label>
+
+                        <select name="status">
+
+                            <option value="draft">
+
+                                Draft
+
+                            </option>
+
+                            <option value="published">
+
+                                Published
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- PUBLISH AT -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Publish At
+
+                        </label>
+
+                        <input type="datetime-local" name="publish_at">
+
+                        <small class="helper-text">
+
+                            Leave empty for instant publishing
+
+                        </small>
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Category
+
+                        </label>
+
+                        <select name="category">
+
+                            <option value="">
+
+                                Select Category
+
+                            </option>
+
+                            {% for category in categories %}
+
+                            <option value="{{ category.id }}">
+
+                                {{ category.name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <!-- TAGS -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Tags
+
+                        </label>
+
+                        <select name="tags" multiple class="multi-select">
+
+                            {% for tag in tags %}
+
+                            <option value="{{ tag.id }}">
+
+                                {{ tag.name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                        <small class="helper-text">
+
+                            Hold CTRL to select multiple tags
+
+                        </small>
+
+                    </div>
+
+                    <!-- IMAGE -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Featured Image
+
+                        </label>
+
+                        <input type="file" name="featured_image">
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <button class="submit-btn">
+
+                        Publish Blog
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+<style>
+    .form-wrapper {
+
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .form-card {
+
+        width: 100%;
+        max-width: 900px;
+
+        background: white;
+
+        padding: 50px;
+
+        border-radius: 30px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.06);
+
+    }
+
+    .form-top {
+
+        margin-bottom: 40px;
+
+    }
+
+    .form-badge {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        padding: 10px 18px;
+
+        border-radius: 50px;
+
+        font-weight: 600;
+
+    }
+
+    .form-top h1 {
+
+        font-size: 52px;
+
+        margin-top: 20px;
+        margin-bottom: 15px;
+
+    }
+
+    .form-top p {
+
+        color: #6b7280;
+
+    }
+
+    .form-group {
+
+        margin-bottom: 28px;
+
+    }
+
+    .form-group label {
+
+        display: block;
+
+        margin-bottom: 12px;
+
+        font-weight: 600;
+
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+
+        width: 100%;
+
+        padding: 16px 18px;
+
+        border-radius: 16px;
+
+        border: 1px solid #d1d5db;
+
+        font-size: 16px;
+
+        outline: none;
+
+    }
+
+    .submit-btn {
+
+        width: 100%;
+
+        background: #2563eb;
+
+        color: white;
+
+        border: none;
+
+        padding: 18px;
+
+        border-radius: 16px;
+
+        font-size: 16px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+
+    }
+
+    .multi-select {
+
+        min-height: 170px;
+
+    }
+
+    .helper-text {
+
+        display: block;
+
+        margin-top: 10px;
+
+        color: #6b7280;
+
+        font-size: 14px;
+
+    }
+</style>
+
+{% endblock %}

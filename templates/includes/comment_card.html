@@ -1,0 +1,45 @@
+<div class="comment-box">
+
+    <div class="comment-top">
+
+        <div class="comment-user">
+
+            <div class="comment-avatar">
+
+                {{ comment.author.username|first|upper }}
+
+            </div>
+
+            <div>
+
+                <h4>
+
+                    {{ comment.author.username }}
+
+                </h4>
+
+                <small>
+
+                    Just now
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="comment-rating">
+
+            ⭐ {{ comment.rating }}/5
+
+        </div>
+
+    </div>
+
+    <div class="comment-content">
+
+        {{ comment.content }}
+
+    </div>
+
+</div>

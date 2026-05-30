@@ -1,0 +1,686 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'includes/dashboard_sidebar.html' %}
+
+    <main class="dashboard-main">
+
+        <!-- ===================================== -->
+        <!-- PAGE TITLE -->
+        <!-- ===================================== -->
+
+        <div class="page-header">
+
+            <div>
+
+                <span class="small-badge">
+
+                    ✨ Dashboard
+
+                </span>
+
+                <h1 class="page-title">
+
+                    My Posts
+
+                </h1>
+
+                <p class="page-description">
+
+                    Manage, update, and organize your blog posts professionally.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ===================================== -->
+        <!-- POSTS GRID -->
+        <!-- ===================================== -->
+
+        <div class="posts-grid">
+
+            {% for post in posts %}
+
+            <div class="post-card">
+
+                <!-- IMAGE -->
+
+                <div class="post-image">
+
+                    {% if post.featured_image %}
+
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+
+                    {% else %}
+
+                    <img src="https://picsum.photos/500/300" alt="{{ post.title }}">
+
+                    {% endif %}
+
+                </div>
+
+                <!-- CONTENT -->
+
+                <div class="post-content">
+
+                    <!-- STATUS -->
+
+                    <div class="post-meta">
+
+                        <span class="status-badge">
+
+                            {{ post.status|title }}
+
+                        </span>
+
+                        <span class="post-date">
+
+                            {{ post.created_at|date:"M d, Y" }}
+
+                        </span>
+
+                    </div>
+
+                    <!-- TITLE -->
+
+                    <h2>
+
+                        {{ post.title }}
+
+                    </h2>
+
+                    <!-- DESCRIPTION -->
+
+                    <p>
+
+                        {{ post.short_description|truncatewords:18 }}
+
+                    </p>
+
+                    <!-- STATS -->
+
+                    <div class="post-stats">
+
+                        <div class="stat-item">
+
+                            ❤️ {{ post.likes.count }}
+
+                        </div>
+
+                        <div class="stat-item">
+
+                            💬 {{ post.comments.count }}
+
+                        </div>
+
+                    </div>
+
+                    <!-- BUTTONS -->
+
+                    <div class="post-buttons">
+
+                        <a href="{% url 'blog_detail' post.slug %}" class="readm-btn">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                            View
+
+                        </a>
+                        
+
+                        <a href="{% url 'update_post' post.slug %}" class="edit-btn">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Edit
+
+                        </a>
+
+                        <a href="{% url 'delete_post' post.slug %}" class="delete-btn">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                            Delete
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+
+                    📝
+
+                </div>
+
+                <h2>
+
+                    No Posts Found
+
+                </h2>
+
+                <p>
+
+                    Start creating modern blog posts for your platform.
+
+                </p>
+
+                <a href="{% url 'create_post' %}" class="create-btn">
+
+                    Create First Post
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</div>
+<style>
+    /* ===================================== */
+    /* PAGE HEADER */
+    /* ===================================== */
+
+    .page-header {
+
+        margin-bottom: 40px;
+
+    }
+
+    .small-badge {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        padding: 8px 16px;
+
+        border-radius: 50px;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        display: inline-block;
+
+        margin-bottom: 18px;
+
+    }
+
+    .page-title {
+
+        font-size: 52px;
+
+        font-weight: 800;
+
+        margin-bottom: 14px;
+
+        color: #111827;
+
+    }
+
+    .page-description {
+
+        color: #6b7280;
+
+        font-size: 17px;
+
+    }
+
+    /* ===================================== */
+    /* POSTS GRID */
+    /* ===================================== */
+
+    .posts-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(380px, 1fr));
+
+        gap: 35px;
+
+        align-items: stretch;
+
+    }
+
+    /* ===================================== */
+    /* POST CARD */
+    /* ===================================== */
+
+    .post-card {
+
+        background: white;
+
+        border-radius: 30px;
+
+        overflow: hidden;
+
+        border: 1px solid #f1f5f9;
+
+        box-shadow:
+            0 12px 35px rgba(0, 0, 0, 0.05);
+
+        transition: 0.35s;
+
+        display: flex;
+
+        flex-direction: column;
+
+        height: 100%;
+
+    }
+
+    .post-card:hover {
+
+        transform: translateY(-8px);
+
+        box-shadow:
+            0 18px 45px rgba(0, 0, 0, 0.08);
+
+    }
+
+    /* ===================================== */
+    /* IMAGE */
+    /* ===================================== */
+
+    .post-image {
+
+        overflow: hidden;
+
+        flex-shrink: 0;
+
+    }
+
+    .post-image img {
+
+        width: 100%;
+
+        height: 240px;
+
+        object-fit: cover;
+
+        transition: 0.4s;
+
+        display: block;
+
+    }
+
+    .post-card:hover .post-image img {
+
+        transform: scale(1.05);
+
+    }
+
+    /* ===================================== */
+    /* CONTENT */
+    /* ===================================== */
+
+    .post-content {
+
+        padding: 30px;
+
+        display: flex;
+
+        flex-direction: column;
+
+    }
+
+    /* ===================================== */
+    /* META */
+    /* ===================================== */
+
+    .post-meta {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 22px;
+
+    }
+
+    .status-badge {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        padding: 8px 16px;
+
+        border-radius: 50px;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+    }
+
+    .post-date {
+
+        color: #6b7280;
+
+        font-size: 14px;
+
+    }
+
+    /* ===================================== */
+    /* TITLE */
+    /* ===================================== */
+
+    .post-content h2 {
+
+        font-size: 28px;
+
+        line-height: 1.35;
+
+        margin-bottom: 18px;
+
+        color: #111827;
+
+        min-height: 76px;
+
+    }
+
+    /* ===================================== */
+    /* DESCRIPTION */
+    /* ===================================== */
+
+    .post-content p {
+
+        color: #6b7280;
+
+        line-height: 1.8;
+
+        font-size: 15px;
+
+        min-height: 58px;
+
+    }
+
+    /* ===================================== */
+    /* STATS */
+    /* ===================================== */
+
+    .post-stats {
+
+        display: flex;
+
+        gap: 12px;
+
+        margin-top: 15px;
+
+    }
+
+    .stat-item {
+
+        background: #f8fafc;
+
+        padding: 10px 16px;
+
+        border-radius: 14px;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        color: #374151;
+
+    }
+
+    /* ===================================== */
+    /* BUTTONS WRAPPER */
+    /* ===================================== */
+
+    .post-buttons {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 14px;
+
+        margin-top: 28px;
+
+    }
+
+    /* ===================================== */
+    /* COMMON BUTTON STYLE */
+    /* ===================================== */
+
+    .readm-btn,
+    .edit-btn,
+    .delete-btn {
+
+        height: 52px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 10px;
+
+        border-radius: 16px;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+        text-decoration: none;
+
+        transition: 0.3s;
+
+        border: 1px solid transparent;
+
+        white-space: nowrap;
+
+    }
+
+    /* ===================================== */
+    /* VIEW BUTTON */
+    /* ===================================== */
+
+    .readm-btn {
+
+        background: linear-gradient(135deg,
+                #2563eb,
+                #1d4ed8);
+
+        color: white;
+
+        box-shadow:
+            0 10px 24px rgba(37, 99, 235, 0.18);
+
+    }
+
+    .readm-btn:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 14px 30px rgba(37, 99, 235, 0.28);
+
+    }
+
+    /* ===================================== */
+    /* EDIT BUTTON */
+    /* ===================================== */
+
+    .edit-btn {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        border-color: #bfdbfe;
+
+    }
+
+    .edit-btn:hover {
+
+        background: #dbeafe;
+
+        transform: translateY(-2px);
+
+    }
+
+    /* ===================================== */
+    /* DELETE BUTTON */
+    /* ===================================== */
+
+    .delete-btn {
+
+        background: #fef2f2;
+
+        color: #dc2626;
+
+        border-color: #fecaca;
+
+    }
+
+    .delete-btn:hover {
+
+        background: #fee2e2;
+
+        transform: translateY(-2px);
+
+    }
+
+    /* ===================================== */
+    /* EMPTY STATE */
+    /* ===================================== */
+
+    .empty-state {
+
+        grid-column: 1 / -1;
+
+        background: white;
+
+        padding: 80px 40px;
+
+        border-radius: 30px;
+
+        text-align: center;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.04);
+
+    }
+
+    .empty-icon {
+
+        font-size: 70px;
+
+        margin-bottom: 20px;
+
+    }
+
+    .empty-state h2 {
+
+        font-size: 40px;
+
+        margin-bottom: 15px;
+
+    }
+
+    .empty-state p {
+
+        color: #6b7280;
+
+        margin-bottom: 28px;
+
+    }
+
+    .create-btn {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 15px 28px;
+
+        border-radius: 16px;
+
+        background: #2563eb;
+
+        color: white;
+
+        font-weight: 600;
+
+        transition: 0.3s;
+
+    }
+
+    .create-btn:hover {
+
+        background: #1d4ed8;
+
+        transform: translateY(-2px);
+
+    }
+
+    /* ===================================== */
+    /* RESPONSIVE */
+    /* ===================================== */
+
+    @media(max-width:768px) {
+
+        .page-title {
+
+            font-size: 40px;
+
+        }
+
+        .posts-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .post-buttons {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .post-content h2 {
+
+            min-height: auto;
+
+        }
+
+        .post-content p {
+
+            min-height: auto;
+
+        }
+
+    }
+</style>
+
+{% endblock %}

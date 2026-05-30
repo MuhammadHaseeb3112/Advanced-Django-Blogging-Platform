@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'includes/dashboard_sidebar.html' %}
+
+    <main class="dashboard-main">
+
+        <h1 class="page-title">
+
+            🔖 Saved Posts
+
+        </h1>
+
+        <div class="posts-grid">
+
+            {% for post in posts %}
+
+            <div class="post-card">
+
+                <img src="https://picsum.photos/500/300">
+
+                <div class="post-content">
+
+                    <h2>
+
+                        {{ post.title }}
+
+                    </h2>
+
+                    <p>
+
+                        {{ post.short_description }}
+
+                    </p>
+
+                    <a href="{% url 'blog_detail' post.slug %}" class="read-btn">
+
+                        Read More
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <p>
+
+                No saved posts yet.
+
+            </p>
+
+            {% endfor %}
+
+        </div>
+    </main>
+
+</div>
+{% endblock %}

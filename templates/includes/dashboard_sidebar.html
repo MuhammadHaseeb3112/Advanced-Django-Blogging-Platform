@@ -1,0 +1,452 @@
+<style>
+
+    .admin-layout {
+    
+        display: grid;
+    
+        grid-template-columns: 290px 1fr;
+    
+        gap: 35px;
+    
+        align-items: start;
+    
+    }
+    
+    /* ===================================== */
+    /* SIDEBAR */
+    /* ===================================== */
+    
+    .sidebar {
+    
+        background: white;
+    
+        border-radius: 30px;
+    
+        padding: 35px;
+    
+        position: sticky;
+    
+        top: 30px;
+    
+        box-shadow:
+            0 10px 30px rgba(0,0,0,0.05);
+    
+    }
+    
+    .sidebar-top {
+    
+        padding-bottom: 28px;
+    
+        border-bottom: 1px solid #f3f4f6;
+    
+    }
+    
+    .sidebar-top h2 {
+    
+        font-size: 34px;
+    
+        margin-bottom: 10px;
+    
+        color: #111827;
+    
+    }
+    
+    .sidebar-top p {
+    
+        color: #6b7280;
+    
+        font-size: 15px;
+    
+    }
+    
+    /* ===================================== */
+    /* SIDEBAR LINKS */
+    /* ===================================== */
+    
+    .sidebar-links {
+    
+        margin-top: 35px;
+    
+        display: flex;
+    
+        flex-direction: column;
+    
+        gap: 14px;
+    
+    }
+    
+    .sidebar-links a {
+    
+        display: flex;
+    
+        align-items: center;
+    
+        gap: 14px;
+    
+        background: #f9fafb;
+    
+        padding: 16px 20px;
+    
+        border-radius: 18px;
+    
+        font-weight: 600;
+    
+        color: #111827;
+    
+        text-decoration: none;
+    
+        transition: 0.3s;
+    
+        border: 1px solid transparent;
+    
+    }
+    
+    .sidebar-links a:hover {
+    
+        background: #2563eb;
+    
+        color: white;
+    
+        transform: translateX(4px);
+    
+    }
+    
+    /* ===================================== */
+    /* ACTIVE LINK */
+    /* ===================================== */
+    
+    .sidebar-links a.active {
+    
+        background: #2563eb;
+    
+        color: white;
+    
+        box-shadow:
+            0 10px 24px rgba(37,99,235,0.20);
+    
+    }
+    
+    /* ===================================== */
+    /* DASHBOARD MAIN */
+    /* ===================================== */
+    
+    .dashboard-main {
+    
+        display: flex;
+    
+        flex-direction: column;
+    
+        gap: 35px;
+    
+    }
+    
+    /* ===================================== */
+    /* COMMON BOX */
+    /* ===================================== */
+    
+    .section-box {
+    
+        background: white;
+    
+        padding: 35px;
+    
+        border-radius: 30px;
+    
+        box-shadow:
+            0 10px 30px rgba(0,0,0,0.05);
+    
+    }
+    
+    .section-top {
+    
+        margin-bottom: 30px;
+    
+    }
+    
+    /* ===================================== */
+    /* POSTS GRID */
+    /* ===================================== */
+    
+    .posts-grid {
+    
+        display: grid;
+    
+        grid-template-columns:
+            repeat(auto-fit, minmax(320px, 1fr));
+    
+        gap: 30px;
+    
+    }
+    
+    /* ===================================== */
+    /* POST CARD */
+    /* ===================================== */
+    
+    .post-card {
+    
+        background: #f9fafb;
+    
+        border-radius: 24px;
+    
+        overflow: hidden;
+    
+        transition: 0.3s;
+    
+        display: flex;
+    
+        flex-direction: column;
+    
+        height: 100%;
+    
+    }
+    
+    .post-card:hover {
+    
+        transform: translateY(-6px);
+    
+    }
+    
+    /* ===================================== */
+    /* POST IMAGE */
+    /* ===================================== */
+    
+    .post-image img {
+    
+        width: 100%;
+    
+        height: 220px;
+    
+        object-fit: cover;
+    
+    }
+    
+    /* ===================================== */
+    /* POST CONTENT */
+    /* ===================================== */
+    
+    .post-content {
+    
+        padding: 24px;
+    
+        display: flex;
+    
+        flex-direction: column;
+    
+        flex: 1;
+    
+    }
+    
+    .post-content h3 {
+    
+        font-size: 24px;
+    
+        margin-bottom: 14px;
+    
+        color: #111827;
+    
+    }
+    
+    .post-content p {
+    
+        color: #6b7280;
+    
+        line-height: 1.8;
+    
+        margin-bottom: 22px;
+    
+        flex: 1;
+    
+    }
+    
+    /* ===================================== */
+    /* READ BUTTON */
+    /* ===================================== */
+    
+    .read-btn {
+    
+        display: flex;
+    
+        align-items: center;
+    
+        justify-content: center;
+    
+        width: 100%;
+    
+        height: 50px;
+    
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+    
+        color: white;
+    
+        border-radius: 16px;
+    
+        text-decoration: none;
+    
+        font-weight: 600;
+    
+        transition: 0.3s;
+    
+        box-shadow:
+            0 10px 24px rgba(37,99,235,0.18);
+    
+    }
+    
+    .read-btn:hover {
+    
+        transform: translateY(-2px);
+    
+        box-shadow:
+            0 14px 30px rgba(37,99,235,0.28);
+    
+    }
+    
+    /* ===================================== */
+    /* EMPTY BOX */
+    /* ===================================== */
+    
+    .empty-box {
+    
+        text-align: center;
+    
+        padding: 90px 20px;
+    
+    }
+    
+    .empty-box h2 {
+    
+        font-size: 38px;
+    
+        margin-bottom: 14px;
+    
+    }
+    
+    .empty-box p {
+    
+        color: #6b7280;
+    
+        font-size: 16px;
+    
+    }
+    
+    /* ===================================== */
+    /* RESPONSIVE */
+    /* ===================================== */
+    
+    @media(max-width: 1000px) {
+    
+        .admin-layout {
+    
+            grid-template-columns: 1fr;
+    
+        }
+    
+        .sidebar {
+    
+            position: relative;
+    
+            top: 0;
+    
+        }
+    
+    }
+    
+    </style>
+    
+    <!-- ===================================== -->
+    <!-- SIDEBAR -->
+    <!-- ===================================== -->
+    
+    <aside class="sidebar">
+    
+        <div class="sidebar-top">
+    
+            <h2>
+    
+                DjangoBlog
+    
+            </h2>
+    
+            <p>
+    
+                Dashboard Control Panel
+    
+            </p>
+    
+        </div>
+    
+        <div class="sidebar-links">
+    
+            <!-- COMMON -->
+    
+            <a href="{% url 'dashboard' %}">
+    
+                📊 Dashboard
+    
+            </a>
+    
+            <a href="{% url 'profile' %}">
+    
+                👤 Profile
+    
+            </a>
+    
+            <a href="{% url 'saved_posts' %}">
+    
+                🔖 Saved Posts
+    
+            </a>
+    
+            <!-- AUTHOR + ADMIN -->
+    
+            {% if request.user.role == 'author' or request.user.role == 'admin' %}
+    
+            <a href="{% url 'create_post' %}">
+    
+                ✍️ Create Post
+    
+            </a>
+    
+            <a href="{% url 'my_posts' %}">
+    
+                📚 My Posts
+    
+            </a>
+    
+            {% endif %}
+    
+            <!-- ADMIN ONLY -->
+    
+            {% if request.user.role == 'admin' %}
+    
+            <a href="{% url 'manage_categories' %}">
+    
+                📂 Categories
+    
+            </a>
+    
+            <a href="{% url 'manage_tags' %}">
+    
+                🏷️ Tags
+    
+            </a>
+    
+            <a href="{% url 'manage_comments' %}">
+    
+                💬 Comments
+    
+            </a>
+    
+            <a href="/admin/">    
+                🛠️ Admin Panel
+    
+            </a>
+    
+            {% endif %}
+    
+        </div>
+    
+    </aside>

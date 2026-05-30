@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="notifications-container">
+
+    <div class="notifications-header">
+
+        <span class="badge">
+
+            🔔 Notifications
+
+        </span>
+
+        <h1>
+
+            Activity Center
+
+        </h1>
+
+        <p>
+
+            Stay updated with likes and comments.
+
+        </p>
+
+    </div>
+
+    {% for notification in notifications %}
+
+    <div class="notification-card">
+
+        <div class="notification-content">
+
+            {% if notification.notification_type == 'like' %}
+
+            <h3>
+
+                ❤️ {{ notification.sender.username }}
+                liked your post
+
+            </h3>
+
+            {% endif %}
+
+            {% if notification.notification_type == 'comment' %}
+
+            <h3>
+
+                💬 {{ notification.sender.username }}
+                commented on your post
+
+            </h3>
+
+            {% endif %}
+
+            <a href="{% url 'blog_detail' notification.post.slug %}">
+
+                {{ notification.post.title }}
+
+            </a>
+
+        </div>
+
+        <span class="notification-time">
+
+            {{ notification.created_at|timesince }} ago
+
+        </span>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty-state">
+
+        <h2>
+
+            No Notifications Yet
+
+        </h2>
+
+        <p>
+
+            Your latest activities will appear here.
+
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+<style>
+
+.notifications-container {
+
+    max-width: 900px;
+
+    margin: auto;
+
+}
+
+.notifications-header {
+
+    margin-bottom: 40px;
+
+}
+
+.badge {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    padding: 8px 16px;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+}
+
+.notifications-header h1 {
+
+    font-size: 52px;
+
+    margin-top: 20px;
+
+    margin-bottom: 12px;
+
+}
+
+.notifications-header p {
+
+    color: #6b7280;
+
+}
+
+.notification-card {
+
+    background: white;
+
+    padding: 26px;
+
+    border-radius: 24px;
+
+    margin-bottom: 22px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.05);
+
+}
+
+.notification-content h3 {
+
+    margin-bottom: 8px;
+
+}
+
+.notification-content a {
+
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+.notification-time {
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+}
+
+.empty-state {
+
+    background: white;
+
+    padding: 70px;
+
+    border-radius: 24px;
+
+    text-align: center;
+
+}
+
+.empty-state p {
+
+    color: #6b7280;
+
+}
+
+</style>
+
+{% endblock %}

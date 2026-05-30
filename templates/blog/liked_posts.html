@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'includes/dashboard_sidebar.html' %}
+
+    <main class="dashboard-main">
+
+        <!-- ===================================== -->
+        <!-- PAGE TOP -->
+        <!-- ===================================== -->
+
+        <div class="page-top">
+
+            <span class="page-badge">
+
+                ❤️ Your Activity
+
+            </span>
+
+            <h1>
+
+                Liked Posts
+
+            </h1>
+
+            <p>
+
+                Blogs you liked recently.
+
+            </p>
+
+        </div>
+
+        <!-- ===================================== -->
+        <!-- POSTS GRID -->
+        <!-- ===================================== -->
+
+        <div class="posts-grid">
+
+            {% for post in posts %}
+
+            <div class="post-card">
+
+                <!-- IMAGE -->
+
+                {% if post.featured_image %}
+
+                <div class="post-image">
+
+                    <img src="{{ post.featured_image.url }}">
+
+                </div>
+
+                {% else %}
+
+                <div class="post-image">
+
+                    <img src="https://picsum.photos/600/400">
+
+                </div>
+
+                {% endif %}
+
+                <!-- CONTENT -->
+
+                <div class="post-content">
+
+                    <h2>
+
+                        {{ post.title }}
+
+                    </h2>
+
+                    <p>
+
+                        {{ post.short_description|truncatechars:100 }}
+
+                    </p>
+
+                    <!-- STATS -->
+
+                    <div class="post-stats">
+
+                        <span>
+
+                            ❤️ {{ post.likes.count }}
+
+                        </span>
+
+                        <span>
+
+                            💬 {{ post.comments.count }}
+
+                        </span>
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <a href="{% url 'blog_detail' post.slug %}" class="read-btn">
+
+                        View Post
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="empty-box">
+
+                <h2>
+
+                    No liked posts yet
+
+                </h2>
+
+                <p>
+
+                    Start liking blogs to see activity here.
+
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</div>
+
+<style>
+
+/* ===================================== */
+/* PAGE TOP */
+/* ===================================== */
+
+.page-top {
+
+    margin-bottom: 45px;
+
+}
+
+.page-badge {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    padding: 10px 18px;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+}
+
+.page-top h1 {
+
+    font-size: 56px;
+
+    margin-top: 22px;
+
+    margin-bottom: 14px;
+
+}
+
+.page-top p {
+
+    color: #6b7280;
+
+    font-size: 17px;
+
+}
+
+/* ===================================== */
+/* POSTS GRID */
+/* ===================================== */
+
+.posts-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(330px, 1fr));
+
+    gap: 30px;
+
+}
+
+/* ===================================== */
+/* POST CARD */
+/* ===================================== */
+
+.post-card {
+
+    background: white;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.05);
+
+}
+
+.post-card:hover {
+
+    transform: translateY(-6px);
+
+}
+
+/* ===================================== */
+/* IMAGE */
+/* ===================================== */
+
+.post-image img {
+
+    width: 100%;
+
+    height: 230px;
+
+    object-fit: cover;
+
+}
+
+/* ===================================== */
+/* CONTENT */
+/* ===================================== */
+
+.post-content {
+
+    padding: 28px;
+
+}
+
+.post-content h2 {
+
+    font-size: 28px;
+
+    margin-bottom: 14px;
+
+    color: #111827;
+
+}
+
+.post-content p {
+
+    color: #6b7280;
+
+    line-height: 1.8;
+
+}
+
+/* ===================================== */
+/* STATS */
+/* ===================================== */
+
+.post-stats {
+
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 22px;
+
+    margin-bottom: 24px;
+
+}
+
+.post-stats span {
+
+    background: #f3f4f6;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+/* ===================================== */
+/* BUTTON */
+/* ===================================== */
+
+.read-btn {
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color: white;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 10px 24px rgba(37,99,235,0.18);
+
+}
+
+.read-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 30px rgba(37,99,235,0.28);
+
+}
+
+/* ===================================== */
+/* EMPTY BOX */
+/* ===================================== */
+
+.empty-box {
+
+    background: white;
+
+    padding: 90px 20px;
+
+    border-radius: 28px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.05);
+
+}
+
+.empty-box h2 {
+
+    font-size: 36px;
+
+    margin-bottom: 14px;
+
+}
+
+.empty-box p {
+
+    color: #6b7280;
+
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media(max-width:768px) {
+
+    .page-top h1 {
+
+        font-size: 42px;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

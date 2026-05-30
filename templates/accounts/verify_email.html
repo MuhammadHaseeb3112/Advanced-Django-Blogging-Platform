@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Verification</title>
+</head>
+<body>
+
+    <h2>Hello {{ user.username }},</h2>
+
+    <p>
+        Thank you for registering.
+    </p>
+
+    <p>
+        Please click the button below to verify your email address:
+    </p>
+
+    <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">
+        Verify Email
+    </a>
+
+    <p>
+        If the button does not work, copy this link:
+    </p>
+
+    <p>
+        http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+    </p>
+
+    <p>
+        Thanks,<br>
+        Authentication System Team
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Cache
+.cache/
+.pytest_cache/
+coverage/
+
+# Static & Media
+media/
+staticfiles/
+
+# Node
+node_modules/
+
+# Build Files
+build/
+dist/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Docker
+docker_data/
+
+celerybeat-schedule
