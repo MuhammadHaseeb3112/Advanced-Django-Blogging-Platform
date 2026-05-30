@@ -1,86 +1,179 @@
 # Advanced Django Blogging Platform
 
-A professional and scalable blogging platform built with Django, Django REST Framework, PostgreSQL, Redis, Celery, Docker, and Django Channels.
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Django](https://img.shields.io/badge/Django-6.0-green)
+![Django REST Framework](https://img.shields.io/badge/DRF-REST%20API-red)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
+![Redis](https://img.shields.io/badge/Redis-Caching-red)
+![Celery](https://img.shields.io/badge/Celery-Background%20Tasks-green)
+![WebSockets](https://img.shields.io/badge/WebSockets-Channels-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-This project demonstrates modern backend engineering concepts including REST APIs, JWT authentication, asynchronous task processing, WebSockets, Docker containerization, Redis caching, and PostgreSQL database integration.
+A professional, scalable, and production-ready blogging platform built with **Django**, **Django REST Framework**, **PostgreSQL**, **Redis**, **Celery**, **Docker**, and **Django Channels**.
+
+This project demonstrates modern backend engineering concepts including REST APIs, JWT authentication, asynchronous task processing, WebSockets, Docker containerization, Redis caching, PostgreSQL integration, and analytics dashboards.
 
 ---
 
-# Features
+# Live Features
 
 ## Authentication System
-- User Registration & Login
-- JWT Authentication
-- Password Reset System
-- Email Verification
-- Secure Authentication Flow
-- Protected Routes & APIs
+
+* User Registration
+* User Login & Logout
+* JWT Authentication
+* Password Change
+* Password Reset
+* Email Verification
+* Protected APIs
+* Role-Based Permissions
 
 ---
 
 ## Blog Features
-- Create, Update & Delete Posts
-- Categories & Tags
-- Rich Text Content
-- Blog Search Functionality
-- Comment System
-- Like & Bookmark System
-- User Profiles
-- Dynamic Content Management
+
+* Create Posts
+* Update Posts
+* Delete Posts
+* Categories Management
+* Tags Management
+* Rich Content Publishing
+* Draft & Published Posts
+* Scheduled Publishing
+* Blog Search
+* User Profiles
+* Author Profiles
+
+---
+
+## Engagement Features
+
+* Comments System
+* Like Posts
+* Bookmark Posts
+* Notification System
+* Trending Posts
+* Most Viewed Posts
+* Featured Posts
+
+---
+
+## Analytics Dashboard
+
+* Total Users
+* Total Posts
+* Total Categories
+* Total Tags
+* Total Views
+* Total Comments
+* Platform Likes
+* Platform Bookmarks
+* Author Analytics
+* Dashboard Statistics
+* Trending Content
+* Top Categories
 
 ---
 
 ## Real-Time Features
-- Django Channels Integration
-- WebSocket Notifications
-- Real-Time Communication
+
+* Django Channels
+* WebSocket Integration
+* Real-Time Notifications
+* Live Updates
 
 ---
 
-## Async Task Management
-- Celery Integration
-- Celery Beat Scheduler
-- Background Task Processing
-- Redis Broker Support
+## Background Task Processing
+
+* Celery Integration
+* Celery Beat Scheduler
+* Automated Tasks
+* Background Processing
+* Redis Broker Support
 
 ---
 
 ## REST API Features
-- Django REST Framework APIs
-- JWT Protected APIs
-- RESTful Architecture
-- API Authentication & Authorization
+
+* Django REST Framework
+* JWT Protected APIs
+* ViewSets
+* Filtering
+* Pagination
+* Permissions
+* OpenAPI Schema
+* Swagger Documentation
+* ReDoc Documentation
 
 ---
 
-# Tech Stack
+# Technology Stack
 
 ## Backend
-- Django
-- Django REST Framework
-- PostgreSQL
-- Redis
-- Celery
-- Django Channels
-- Daphne
+
+* Python 3.12
+* Django 6
+* Django REST Framework
+* PostgreSQL
+* SQLite
+* Redis
+* Celery
+* Django Channels
+* Daphne
 
 ---
 
 ## Frontend
-- HTML5
-- CSS3
-- Bootstrap
-- JavaScript
+
+* HTML5
+* CSS3
+* Bootstrap
+* JavaScript
 
 ---
 
-## DevOps & Tools
-- Docker
-- Docker Compose
-- Git
-- GitHub
-- SQLite
-- PostgreSQL
+## DevOps & Infrastructure
+
+* Docker
+* Docker Compose
+* Nginx
+* Git
+* GitHub
+
+---
+
+# Architecture
+
+Client Browser
+
+↓
+
+Django Templates
+
+↓
+
+Django Views & DRF APIs
+
+↓
+
+PostgreSQL Database
+
+↓
+
+Redis Cache / Broker
+
+↓
+
+Celery Workers
+
+↓
+
+Django Channels (WebSockets)
+
+↓
+
+Docker + Nginx
 
 ---
 
@@ -89,22 +182,31 @@ This project demonstrates modern backend engineering concepts including REST API
 ```bash
 accounts/
 api/
+│
+├── filters/
+├── pagination/
+├── permissions/
+├── serializers/
+├── services/
+└── views/
+│
 blog/
 core/
+nginx/
 templates/
 static/
 media/
+
 Dockerfile
 docker-compose.yml
-manage.py
 requirements.txt
+manage.py
+README.md
 ```
 
----
+# Installation
 
-# Installation Guide
-
-## 1. Clone Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/MuhammadHaseeb3112/Advanced-Django-Blogging-Platform.git
@@ -112,9 +214,7 @@ git clone https://github.com/MuhammadHaseeb3112/Advanced-Django-Blogging-Platfor
 cd Advanced-Django-Blogging-Platform
 ```
 
----
-
-## 2. Create Virtual Environment
+## Create Virtual Environment
 
 ### Windows
 
@@ -132,19 +232,15 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
----
-
-## 3. Install Dependencies
+## Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
 # Environment Variables
 
-Create a `.env` file in the root directory:
+Create a `.env` file:
 
 ```env
 SECRET_KEY=your_secret_key
@@ -152,35 +248,33 @@ SECRET_KEY=your_secret_key
 DEBUG=True
 
 POSTGRES_DB=django_blog
+
 POSTGRES_USER=postgres
+
 POSTGRES_PASSWORD=your_password
+
 POSTGRES_HOST=db
+
 POSTGRES_PORT=5432
 ```
 
----
-
 # Database Setup
 
-## SQLite (Development)
+## SQLite
 
 ```bash
 python manage.py migrate
 ```
-
----
 
 ## PostgreSQL
 
-Update PostgreSQL settings inside `.env` file.
+Update PostgreSQL credentials in `.env`
 
-Run migrations:
+Then:
 
 ```bash
 python manage.py migrate
 ```
-
----
 
 # Run Development Server
 
@@ -188,13 +282,11 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Visit:
+Open:
 
 ```bash
 http://127.0.0.1:8000/
 ```
-
----
 
 # Docker Setup
 
@@ -204,33 +296,31 @@ http://127.0.0.1:8000/
 docker compose build
 ```
 
----
-
-## Run Containers
+## Start Containers
 
 ```bash
 docker compose up
 ```
 
----
-
-## Run In Detached Mode
+## Detached Mode
 
 ```bash
 docker compose up -d
 ```
 
----
+## Stop Containers
+
+```bash
+docker compose down
+```
 
 # Celery Setup
 
 ## Start Celery Worker
 
 ```bash
-celery -A core worker -l info -P solo
+celery -A core worker -l info
 ```
-
----
 
 ## Start Celery Beat
 
@@ -238,64 +328,120 @@ celery -A core worker -l info -P solo
 celery -A core beat -l info
 ```
 
----
-
 # WebSocket Server
-
-Run Daphne server:
 
 ```bash
 daphne core.asgi:application
 ```
 
----
+# API Documentation
 
-# Future Improvements
+## Swagger UI
 
-- Docker Production Deployment
-- CI/CD Pipeline
-- AWS Deployment
-- Nginx + Gunicorn Setup
-- Elasticsearch Integration
-- AI-Based Content Recommendations
-- Advanced Analytics Dashboard
-- Kubernetes Deployment
+```text
+http://localhost/api/docs/
+```
 
----
+## ReDoc
 
-# Learning Objectives
+```text
+http://localhost/api/redoc/
+```
 
-This project demonstrates:
+## OpenAPI Schema
 
-- Django Backend Development
-- REST API Development
-- Authentication Systems
-- PostgreSQL Integration
-- Redis Caching
-- Docker Containerization
-- Celery Background Tasks
-- Real-Time WebSocket Communication
-- Production-Level Project Structure
-
----
+```text
+http://localhost/api/schema/
+```
 
 # Screenshots
 
-Project screenshots will be added soon.
+Create an assets folder:
 
----
+```text
+assets/
+├── home.png
+├── dashboard.png
+├── swagger.png
+├── redoc.png
+```
+
+## Home Page
+
+```markdown
+![Home](assets/home.png)
+```
+
+## Dashboard
+
+```markdown
+![Dashboard](assets/dashboard.png)
+```
+
+## Swagger Documentation
+
+```markdown
+![Swagger](assets/swagger.png)
+```
+
+## ReDoc Documentation
+
+```markdown
+![ReDoc](assets/redoc.png)
+```
+
+# Highlights
+
+This project demonstrates:
+
+* Advanced Django Development
+* Django REST Framework
+* JWT Authentication
+* PostgreSQL Integration
+* Redis Caching
+* Celery Background Tasks
+* WebSocket Communication
+* Docker Containerization
+* Nginx Reverse Proxy
+* API Documentation
+* Clean Architecture
+* Production-Oriented Design
+
+# Future Improvements
+
+* CI/CD Pipeline
+* GitHub Actions
+* AWS Deployment
+* Kubernetes Deployment
+* Elasticsearch Integration
+* AI Content Recommendations
+* Social Authentication
+* Two-Factor Authentication
+* Advanced Monitoring
+* Multi-Tenant Blogging
+
+# Release Information
+
+Current Stable Release:
+
+```text
+v1.0.0
+```
+
+Repository:
+
+https://github.com/MuhammadHaseeb3112/Advanced-Django-Blogging-Platform
 
 # Author
 
 ## Muhammad Haseeb
 
 GitHub:
-https://github.com/MuhammadHaseeb3112
 
----
+https://github.com/MuhammadHaseeb3112
 
 # License
 
 This project is licensed under the MIT License.
 
----
+© 2026 Muhammad Haseeb. All rights reserved.
